@@ -1,0 +1,40 @@
+<h1 mat-dialog-title>REPORT DISCLOSURE</h1>
+<mat-dialog-content class="mat-typography" style="color:#000">
+    <figure>
+        <img [src]="src" alt="Nothing" class="moreinfo-img">
+        <h3 class="bold">Troublemaker: 
+            <span style="color: rgb(209, 28, 28)">{{data.troublemakerName}}</span>
+        </h3>
+        <p><span class="bold">Location: </span>{{data.location}}</p>
+        <p><span class="bold">Time Reported: </span>{{data.time}}</p>
+        <p><span class="bold">Status: </span>
+            <span *ngIf="data.open; else closed">OPEN</span>
+            <ng-template #closed>
+                RESOLVED
+            </ng-template>
+        </p>
+        <p *ngIf="hasExtra">
+            <span class="bold">Extra Information: </span>
+            {{data.extra}}
+        </p>
+        <p>
+            <span class="bold">Reported By: </span>
+            {{data.name}}
+        </p>
+        <p>
+            <span class="bold">Phone Number: </span>
+            {{data.phone}}
+        </p>
+    </figure>
+</mat-dialog-content>
+<mat-dialog-actions align="start">
+    <button mat-button [mat-dialog-close]="true" color="primary">CLOSE</button>
+    <button mat-button type="button" (click)="handlePassword()" color="warn">CHANGE STATUS</button>
+    <ng-container *ngIf="passwordPrompt">
+        <mat-label style="color:rgb(255, 10, 10); width:100%;" *ngIf="!this.updated">Password is required to change status.</mat-label>
+        <mat-label style="width: 100%;">Password: </mat-label>
+        <input [(ngModel)]="password" mat-input type="password">
+        <p style="color: rgb(255, 10, 10); width: 100%;" *ngIf="this.invalidAttempt && !this.updated">Password is incorrect.</p>
+        <p style="color: rgb(20, 114, 42); width: 100%;" *ngIf="this.updated && !this.invalidAttempt">Status Updated</p>
+    </ng-container>
+</mat-dialog-actions>

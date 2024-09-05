@@ -1,0 +1,6 @@
+#map-container, #map, [id^=map] {
+    min-height: 600px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}

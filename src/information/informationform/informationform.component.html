@@ -1,0 +1,56 @@
+<button mat-raised-button color="accent" class="nuisance-form-btn" (click)="revealForm(el)"type="button">File a Nuisance Report</button>
+<form #thisForm="ngForm" #el (ngSubmit)="onSubmit(thisForm)" id="nuisance-form" class="hidden" [formGroup]="nuisanceForm">
+    <h5>Your Information: </h5>
+    <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" type="text">
+        <mat-error *ngIf="name?.pristine">Required.</mat-error>
+        <mat-error *ngIf="name?.invalid && name?.dirty">Name is not valid. Can only contains alphabetical, hyphen, space or underscore characters.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Phone Number</mat-label>
+        <input matInput formControlName="phone" type="tel">
+        <mat-hint>Format: XXX-XXX-XXXX</mat-hint>
+        <mat-error *ngIf="phone?.pristine">Required.</mat-error>
+        <mat-error *ngIf="phone?.hasError('pattern') && phone?.dirty">Invalid Phone Number. Format: XXX-XXX-XXXX</mat-error>
+    </mat-form-field>
+    <h5>Incident Information: </h5>
+    <mat-form-field>
+        <mat-label>Troublemaker Name</mat-label>
+        <input matInput formControlName="troublemakerName" type="text">
+        <mat-error *ngIf="troublemakerName?.pristine">Required.</mat-error>
+        <mat-error *ngIf="troublemakerName?.invalid && troublemakerName?.dirty">Name is not valid. Can only contains alphabetical, hyphen, space or underscore characters.</mat-error>
+    </mat-form-field>
+    <button type="button" *ngIf="locationSet.length>0" (click)="addNewLocation()" role="button" class="btn btn-success" style="font-size: 1.1rem; display:block; text-align: left;">
+        Add New Location +
+    </button>
+    <mat-form-field>
+        <mat-label>Location Name</mat-label>
+        <mat-select matInput formControlName="location" type="text">
+            @for (location of locationSet; track location) {
+                <mat-option (click)="updateLocation(location)" [value]="location.location">{{location.location}}</mat-option>
+            }
+        </mat-select>
+        <mat-error *ngIf="location?.pristine">Required.</mat-error>
+        <mat-error *ngIf="location?.invalid && location?.dirty">Location is not valid. Can only contains alphabetical, hyphen, space or underscore characters.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Latitude (Read Only)</mat-label>
+        <input matInput [value]="setLatitude" formControlName="latitude" type="number" [readonly]="true">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Longitude (Read Only)</mat-label>
+        <input matInput formControlName="longitude" type="number" [value]="setLongitude" [readonly]="true">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Picture URL (Optional)</mat-label>
+        <input matInput formControlName="picture" type="url">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Additional Details</mat-label>
+        <textarea matInput formControlName="extraInfo" type="text" rows="6"></textarea>
+    </mat-form-field>
+    <p style="color: rgb(255, 10, 10);" *ngIf="invalidForm">Invalid submission. Check your information.</p>
+    <button mat-flat-button color="accent" id="nuisance-form-submit" class="nuisance-form-end" type="submit">Submit Nuisance Report</button>
+    <button mat-flat-button (click)="hideForm(el, thisForm)" color="warn" id="nuisance-form-close" class="btn nuisance-form-end" type="button">Close</button>
+</form>

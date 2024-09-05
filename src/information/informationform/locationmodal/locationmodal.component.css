@@ -1,0 +1,11 @@
+.form-full {
+    width: 100%;
+    display:block;
+    margin: 6px 0;
+}
+
+mat-form-field {
+    min-width: 300px;
+    margin: 6px 0;
+    display: block;
+}
